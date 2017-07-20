@@ -71,6 +71,20 @@ namespace WorkerRole1
             blockBlob.UploadFromStream(stream);
         }
 
+        public byte[] DownloadImage(string imageName)
+        {
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(imageName);
+            blockBlob.FetchAttributes();
+            long fileByteLength = blockBlob.Properties.Length;
+            byte[] fileContent = new byte[fileByteLength];
+            for (int i = 0; i < fileByteLength; i++)
+            {
+                fileContent[i] = 0x20;
+            }
+            blockBlob.DownloadToByteArray(fileContent, 0);
+            return fileContent;
+        }
+
         /// <summary>
         /// Lists the in BLOB.
         /// </summary>

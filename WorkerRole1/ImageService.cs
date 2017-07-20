@@ -42,6 +42,25 @@ namespace WebSocketSharp.Server
     }
 
     /// <summary>
+    /// Class ServerResponse.
+    /// </summary>
+    public class ServerResponse
+    {
+        /// <summary>
+        /// The identifier
+        /// </summary>
+        public int id;
+        /// <summary>
+        /// The name
+        /// </summary>
+        public string name;
+        /// <summary>
+        /// The image
+        /// </summary>
+        public byte[] image;
+    }
+
+    /// <summary>
     /// Class ImageService.
     /// </summary>
     public class ImageService : WebSocketBehavior
@@ -57,7 +76,7 @@ namespace WebSocketSharp.Server
         public int SocketCurrentUserId;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageService"/> class.
+        /// Initializes a new instance of the <see cref="ImageService" /> class.
         /// </summary>
         public ImageService()
 		{
@@ -88,7 +107,12 @@ namespace WebSocketSharp.Server
                 BlobConnector blob = new BlobConnector();
                 blob.UploadImage(clientRequest.name, new MemoryStream(clientRequest.image));
 
-                SendThis("Found name");
+                ServerResponse serverResponse = new ServerResponse();
+                serverResponse.id = 2;
+                serverResponse.name = "testName";
+                serverResponse.image = blob.DownloadImage(clientRequest.name);
+                string ret = JsonConvert.SerializeObject(serverResponse);
+                SendThis(ret);
             }
         }
 
@@ -165,7 +189,7 @@ namespace WebSocketSharp.Server
 		}
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="ImageService"/> class.
+        /// Finalizes an instance of the <see cref="ImageService" /> class.
         /// </summary>
         ~ImageService()
 		{
