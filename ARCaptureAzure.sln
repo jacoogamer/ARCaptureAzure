@@ -7,6 +7,8 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ARCaptureAzure", "ARCapture
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerRole1", "WorkerRole1\WorkerRole1.csproj", "{42122DEB-A3AF-4A91-8B5D-39F9374A3F29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketServer", "WebSocketServer\WebSocketServer.csproj", "{84161FE7-5C4C-4768-8D6B-890AB4EEE0C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{42122DEB-A3AF-4A91-8B5D-39F9374A3F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42122DEB-A3AF-4A91-8B5D-39F9374A3F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42122DEB-A3AF-4A91-8B5D-39F9374A3F29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84161FE7-5C4C-4768-8D6B-890AB4EEE0C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84161FE7-5C4C-4768-8D6B-890AB4EEE0C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84161FE7-5C4C-4768-8D6B-890AB4EEE0C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84161FE7-5C4C-4768-8D6B-890AB4EEE0C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

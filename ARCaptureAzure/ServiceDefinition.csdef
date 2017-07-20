@@ -4,5 +4,12 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
+    <Imports>
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="RemoteForwarder" />
+    </Imports>
+    <Endpoints>
+      <InputEndpoint name="ws" protocol="http" port="27000" localPort="27000" />
+    </Endpoints>
   </WorkerRole>
 </ServiceDefinition>
