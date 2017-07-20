@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
+using WorkerRole1;
 
 namespace WebSocketSharp.Server
 {
@@ -32,8 +34,13 @@ namespace WebSocketSharp.Server
         {
             ClientRequest clientRequest = JsonConvert.DeserializeObject<ClientRequest>(json);
 
-            if(clientRequest.name == "jason")
+            if(clientRequest.name == "vr_orig.png")
+            {
+                BlobConnector blob = new BlobConnector();
+                blob.UploadImage(clientRequest.name, new MemoryStream(clientRequest.image));
+
                 SendThis("Found name");
+            }
         }
 
         private WebSocketSessionManager m_WebSocketSessionManager

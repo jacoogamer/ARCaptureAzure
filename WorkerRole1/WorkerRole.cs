@@ -49,8 +49,6 @@ namespace WorkerRole1
 
             Debug.WriteLine("WorkerRole1 has been started");
 
-            BlobConnector blob = new BlobConnector();
-
             return result;
         }
 
