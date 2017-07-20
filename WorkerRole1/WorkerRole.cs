@@ -1,3 +1,16 @@
+// ***********************************************************************
+// Assembly         : WorkerRole1
+// Author           : Jason Coombes
+// Created          : 07-18-2017
+//
+// Last Modified By : Jason Coombes
+// Last Modified On : 07-20-2017
+// ***********************************************************************
+// <copyright file="WorkerRole.cs" company="">
+//     Copyright ©  2017
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -6,15 +19,33 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceRuntime;
 
+/// <summary>
+/// The WorkerRole1 namespace.
+/// </summary>
 namespace WorkerRole1
 {
+    /// <summary>
+    /// Class WorkerRole.
+    /// </summary>
     public class WorkerRole : RoleEntryPoint
     {
+        /// <summary>
+        /// The cancellation token source
+        /// </summary>
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        /// <summary>
+        /// The run complete event
+        /// </summary>
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
 
+        /// <summary>
+        /// The busy
+        /// </summary>
         private volatile bool busy = true;
 
+        /// <summary>
+        /// Runs this instance.
+        /// </summary>
         public override void Run()
         {
             Debug.WriteLine("WorkerRole1 is running");
@@ -29,6 +60,10 @@ namespace WorkerRole1
             }
         }
 
+        /// <summary>
+        /// Called when [start].
+        /// </summary>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public override bool OnStart()
         {
             // Set the maximum number of concurrent connections
@@ -52,6 +87,9 @@ namespace WorkerRole1
             return result;
         }
 
+        /// <summary>
+        /// Called when [stop].
+        /// </summary>
         public override void OnStop()
         {
             Trace.TraceInformation("WorkerRole1 is stopping");
@@ -64,6 +102,11 @@ namespace WorkerRole1
             Debug.WriteLine("WorkerRole1 has stopped");
         }
 
+        /// <summary>
+        /// run as an asynchronous operation.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task.</returns>
         private async Task RunAsync(CancellationToken cancellationToken)
         {
             await Task.Run(new Action(Server.Initialise), cancellationToken);
@@ -75,6 +118,11 @@ namespace WorkerRole1
         }
 
 
+        /// <summary>
+        /// Roles the environment changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoleEnvironmentChangedEventArgs"/> instance containing the event data.</param>
         private void RoleEnvironmentChanged(object sender, RoleEnvironmentChangedEventArgs e)
         {
             try
@@ -115,6 +163,11 @@ namespace WorkerRole1
             }
         }
 
+        /// <summary>
+        /// Roles the environment status check.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoleInstanceStatusCheckEventArgs"/> instance containing the event data.</param>
         private void RoleEnvironmentStatusCheck(object sender, RoleInstanceStatusCheckEventArgs e)
         {
             try
@@ -132,6 +185,11 @@ namespace WorkerRole1
             }
         }
 
+        /// <summary>
+        /// Roles the environment simultaneous changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SimultaneousChangedEventArgs"/> instance containing the event data.</param>
         private void RoleEnvironmentSimultaneousChanged(object sender, SimultaneousChangedEventArgs e)
         {
             try
@@ -149,6 +207,11 @@ namespace WorkerRole1
             }
         }
 
+        /// <summary>
+        /// Roles the environment simultaneous changing.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SimultaneousChangingEventArgs"/> instance containing the event data.</param>
         private void RoleEnvironmentSimultaneousChanging(object sender, SimultaneousChangingEventArgs e)
         {
             try
@@ -168,6 +231,11 @@ namespace WorkerRole1
             }
         }
 
+        /// <summary>
+        /// Roles the environment stopping.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoleEnvironmentStoppingEventArgs"/> instance containing the event data.</param>
         private void RoleEnvironmentStopping(object sender, RoleEnvironmentStoppingEventArgs e)
         {
             try

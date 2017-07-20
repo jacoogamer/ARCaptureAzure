@@ -1,18 +1,49 @@
-﻿using Microsoft.WindowsAzure.Storage;
+﻿// ***********************************************************************
+// Assembly         : WorkerRole1
+// Author           : Jason Coombes
+// Created          : 07-20-2017
+//
+// Last Modified By : Jason Coombes
+// Last Modified On : 07-20-2017
+// ***********************************************************************
+// <copyright file="BlobConnector.cs" company="">
+//     Copyright ©  2017
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.Azure;
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
 
+/// <summary>
+/// The WorkerRole1 namespace.
+/// </summary>
 namespace WorkerRole1
 {
+    /// <summary>
+    /// Class BlobConnector.
+    /// </summary>
     public class BlobConnector
     {
+        /// <summary>
+        /// The storage account
+        /// </summary>
         CloudStorageAccount storageAccount;
+        /// <summary>
+        /// The BLOB client
+        /// </summary>
         CloudBlobClient blobClient;
+        /// <summary>
+        /// The container
+        /// </summary>
         CloudBlobContainer container;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobConnector"/> class.
+        /// </summary>
         public BlobConnector()
         {
             // Retrieve storage account from connection string.
@@ -29,12 +60,21 @@ namespace WorkerRole1
             container.CreateIfNotExists();
         }
 
+        /// <summary>
+        /// Uploads the image.
+        /// </summary>
+        /// <param name="imageName">Name of the image.</param>
+        /// <param name="stream">The stream.</param>
         public void UploadImage(string imageName, MemoryStream stream)
         {
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(imageName);
             blockBlob.UploadFromStream(stream);
         }
 
+        /// <summary>
+        /// Lists the in BLOB.
+        /// </summary>
+        /// <param name="containerName">Name of the container.</param>
         private void ListInBlob(string containerName)
         {
             var container = blobClient.GetContainerReference(containerName);
@@ -66,6 +106,12 @@ namespace WorkerRole1
             }
         }
 
+        /// <summary>
+        /// Keys the exists.
+        /// </summary>
+        /// <param name="containerName">Name of the container.</param>
+        /// <param name="key">The key.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool KeyExists(string containerName, string key)
         {
             var container = blobClient.GetContainerReference(containerName);
@@ -84,6 +130,12 @@ namespace WorkerRole1
             return false;
         }
 
+        /// <summary>
+        /// Finds the by key.
+        /// </summary>
+        /// <param name="containerName">Name of the container.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>List&lt;System.String&gt;.</returns>
         public List<string> FindByKey(string containerName, string key)
         {
             var container = blobClient.GetContainerReference(containerName);
@@ -108,6 +160,11 @@ namespace WorkerRole1
             return keys;
         }
 
+        /// <summary>
+        /// Deletes the BLOB.
+        /// </summary>
+        /// <param name="containerName">Name of the container.</param>
+        /// <param name="key">The key.</param>
         private void DeleteBlob(string containerName, string key)
         {
             var container = blobClient.GetContainerReference(containerName);

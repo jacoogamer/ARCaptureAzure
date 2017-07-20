@@ -1,12 +1,35 @@
-﻿
+﻿// ***********************************************************************
+// Assembly         : WorkerRole1
+// Author           : Jason Coombes
+// Created          : 07-20-2017
+//
+// Last Modified By : Jason Coombes
+// Last Modified On : 07-20-2017
+// ***********************************************************************
+// <copyright file="Server.cs" company="">
+//     Copyright ©  2017
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
 using System.Diagnostics;
 using System.Linq;
 using WebSocketSharp.Server;
 
+/// <summary>
+/// The WorkerRole1 namespace.
+/// </summary>
 namespace WorkerRole1
 {
+    /// <summary>
+    /// Class Server.
+    /// </summary>
     public static class Server
     {
+        /// <summary>
+        /// Gets the web socket server.
+        /// </summary>
+        /// <value>The web socket server.</value>
         public static WebSocketServer WebSocketServer
         {
             get { return m_webSocketServer; }
@@ -17,6 +40,9 @@ namespace WorkerRole1
         /// </summary>
         private static WebSocketServer m_webSocketServer;
 
+        /// <summary>
+        /// Initialises this instance.
+        /// </summary>
         public static void Initialise()
         {
             //var myCertificate = GetX509Certificate2();
@@ -29,33 +55,6 @@ namespace WorkerRole1
         /// Returns the X509 certificate used for the wss connection.
         /// </summary>
         /// <returns>X509Certificate2.</returns>
-        //public static X509Certificate2 GetX509Certificate2()
-        //{
-        //    const string signingCertificateName = "ARCaptureWSS";
-        //    X509Certificate2 myCertificate = new X509Certificate2();
-        //    var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
-        //    store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
-        //    var matchedCertificates = store.Certificates.Find(X509FindType.FindBySubjectName, signingCertificateName, true);
-
-        //    if (matchedCertificates.Count > 0)
-        //    {
-        //        Debug.WriteLine("Certificate Found in StoreLocation");
-        //        myCertificate = matchedCertificates[0];
-        //    }
-        //    else
-        //    {
-        //        Debug.WriteLine("StoreLocation certificate not found, assigning local certificate");
-        //        myCertificate = new X509Certificate2(); // "AzureRivalityWSS.pfx", Settings.SocketCredentialsPassword);
-        //    }
-
-        //    return myCertificate;
-        //}
-
-        /// <summary>
-        /// Adds the services to the websocket server.
-        /// Even though the websocket server suppresses adding the same service, checks are added here for functional testing.
-        /// </summary>
-        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public static bool AddServicesToWebSocketServer()
         {
             var ret = false;
@@ -84,6 +83,9 @@ namespace WorkerRole1
             return ret;
         }
 
+        /// <summary>
+        /// Creates the secure web socket server.
+        /// </summary>
         public static void CreateSecureWebSocketServer()
         //public static void CreateSecureWebSocketServer(X509Certificate2 myCertificate)
         {
