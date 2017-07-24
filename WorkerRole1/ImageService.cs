@@ -31,14 +31,25 @@ namespace WebSocketSharp.Server
         /// The identifier
         /// </summary>
         public int id;
+
         /// <summary>
         /// The name
         /// </summary>
         public string name;
+
         /// <summary>
         /// The image
         /// </summary>
         public byte[] image;
+
+        public RequestType RequestType;
+    }
+
+    public enum RequestType
+    {
+        DownloadImage = 1,
+        ListBlobDirectories = 2,
+        ListBlobsInDirectory = 3
     }
 
     /// <summary>
@@ -50,14 +61,18 @@ namespace WebSocketSharp.Server
         /// The identifier
         /// </summary>
         public int id;
+
         /// <summary>
         /// The name
         /// </summary>
         public string name;
+
         /// <summary>
         /// The image
         /// </summary>
         public byte[] image;
+
+        public string ResponseType;
     }
 
     /// <summary>
@@ -100,17 +115,37 @@ namespace WebSocketSharp.Server
         {
             ClientRequest clientRequest = JsonConvert.DeserializeObject<ClientRequest>(json);
 
-            if(clientRequest.name == "vr_orig.png")
+            switch (clientRequest.RequestType)
             {
-                BlobConnector blob = new BlobConnector();
-                blob.UploadImage(clientRequest.name, new MemoryStream(clientRequest.image));
+                case RequestType.DownloadImage:
+                {
+                    if (clientRequest.name == "vr_orig.png")
+                    {
+                        BlobConnector blob = new BlobConnector();
+                        blob.UploadImage(clientRequest.name, new MemoryStream(clientRequest.image));
 
-                ServerResponse serverResponse = new ServerResponse();
-                serverResponse.id = 2;
-                serverResponse.name = "testName";
-                serverResponse.image = blob.DownloadImage(clientRequest.name);
-                string ret = JsonConvert.SerializeObject(serverResponse);
-                SendThis(ret);
+                        ServerResponse serverResponse = new ServerResponse()
+                        {
+                            id = 2,
+                            name = "testName",
+                            ResponseType = "DownloadImage"
+                        };
+
+                        serverResponse.image = blob.DownloadImage(clientRequest.name);
+
+                        string ret = JsonConvert.SerializeObject(serverResponse);
+                        SendThis(ret);
+                    }
+                    break;
+                }
+                case RequestType.ListBlobDirectories:
+                {
+                    break;
+                }
+                case RequestType.ListBlobsInDirectory:
+                {
+                    break;
+                }
             }
         }
 

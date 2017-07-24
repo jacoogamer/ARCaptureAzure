@@ -131,17 +131,17 @@ namespace WorkerRole1
         /// Lists the blobs.
         /// </summary>
         /// <param name="containerName">Name of the container.</param>
-        /// <returns>List&lt;Uri&gt;.</returns>
-        public List<Uri> ListBlobs(string containerName)
+        /// <returns>List&lt;string&gt;.</returns>
+        public List<string> ListBlobs(string containerName)
         {
             var backupContainer = blobClient.GetContainerReference(containerName);
 
             var blobs = backupContainer.ListBlobs();
 
-            List<Uri> blobList = new List<Uri>();
+            List<string> blobList = new List<string>();
             foreach (var blob in blobs.OfType<CloudBlob>())
             {
-                blobList.Add(blob.Uri);
+                blobList.Add(blob.Uri.ToString());
             }
 
             return blobList;
@@ -151,18 +151,18 @@ namespace WorkerRole1
         /// Lists the BLOB directories.
         /// </summary>
         /// <param name="containerName">Name of the container.</param>
-        /// <returns>List&lt;Uri&gt;.</returns>
-        public List<Uri> ListBlobDirectories(string containerName)
+        /// <returns>List&lt;string&gt;.</returns>
+        public List<string> ListBlobDirectories(string containerName)
         {
             var backupContainer = blobClient.GetContainerReference(containerName);
 
             var blobs = backupContainer.ListBlobs();
 
-            List<Uri> directory = new List<Uri>();
+            List<string> directory = new List<string>();
 
             foreach (var dir in blobs.OfType<CloudBlobDirectory>())
             {
-                directory.Add(dir.Uri);
+                directory.Add(dir.Uri.ToString());
             }
 
             return directory;
