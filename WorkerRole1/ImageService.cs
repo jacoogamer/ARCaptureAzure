@@ -13,6 +13,7 @@
 // ***********************************************************************
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using WorkerRole1;
 
@@ -73,6 +74,8 @@ namespace WebSocketSharp.Server
         public byte[] image;
 
         public string ResponseType;
+
+        public List<string> BlobDirectories;
     }
 
     /// <summary>
@@ -140,11 +143,41 @@ namespace WebSocketSharp.Server
                 }
                 case RequestType.ListBlobDirectories:
                 {
-                    break;
+                        BlobConnector blobConnector = new BlobConnector();
+                        List<string> blobDirectories = new List<string>();
+                        blobDirectories = blobConnector.ListBlobDirectories("arimages");
+
+                        ServerResponse serverResponse = new ServerResponse()
+                        {
+                            id = 2,
+                            name = "testListBlobDirectories",
+                            ResponseType = "ListBlobDirectories",
+                            BlobDirectories = blobDirectories
+                        };
+
+                        string ret = JsonConvert.SerializeObject(serverResponse);
+                        SendThis(ret);
+
+                        break;
                 }
                 case RequestType.ListBlobsInDirectory:
                 {
-                    break;
+                        BlobConnector blobConnector = new BlobConnector();
+                        List<string> blobDirectories = new List<string>();
+                        blobDirectories = blobConnector.ListBlobs("arimages");
+
+                        ServerResponse serverResponse = new ServerResponse()
+                        {
+                            id = 2,
+                            name = "testListBlobs",
+                            ResponseType = "ListBlobs",
+                            BlobDirectories = blobDirectories
+                        };
+
+                        string ret = JsonConvert.SerializeObject(serverResponse);
+                        SendThis(ret);
+
+                        break;
                 }
             }
         }
