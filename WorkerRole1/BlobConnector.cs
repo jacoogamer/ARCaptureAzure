@@ -4,7 +4,7 @@
 // Created          : 07-20-2017
 //
 // Last Modified By : Jason Coombes
-// Last Modified On : 07-20-2017
+// Last Modified On : 07-24-2017
 // ***********************************************************************
 // <copyright file="BlobConnector.cs" company="">
 //     Copyright ©  2017
@@ -14,9 +14,11 @@
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.Azure;
+using System;
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// The WorkerRole1 namespace.
@@ -42,7 +44,7 @@ namespace WorkerRole1
         CloudBlobContainer container;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobConnector"/> class.
+        /// Initializes a new instance of the <see cref="BlobConnector" /> class.
         /// </summary>
         public BlobConnector()
         {
@@ -71,6 +73,11 @@ namespace WorkerRole1
             blockBlob.UploadFromStream(stream);
         }
 
+        /// <summary>
+        /// Downloads the image.
+        /// </summary>
+        /// <param name="imageName">Name of the image.</param>
+        /// <returns>System.Byte[].</returns>
         public byte[] DownloadImage(string imageName)
         {
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(imageName);
@@ -118,6 +125,47 @@ namespace WorkerRole1
                     Debug.WriteLine("Directory: {0}", directory.Uri);
                 }
             }
+        }
+
+        /// <summary>
+        /// Lists the blobs.
+        /// </summary>
+        /// <param name="containerName">Name of the container.</param>
+        /// <returns>List&lt;Uri&gt;.</returns>
+        public List<Uri> ListBlobs(string containerName)
+        {
+            var backupContainer = blobClient.GetContainerReference(containerName);
+
+            var blobs = backupContainer.ListBlobs();
+
+            List<Uri> blobList = new List<Uri>();
+            foreach (var blob in blobs.OfType<CloudBlob>())
+            {
+                blobList.Add(blob.Uri);
+            }
+
+            return blobList;
+        }
+
+        /// <summary>
+        /// Lists the BLOB directories.
+        /// </summary>
+        /// <param name="containerName">Name of the container.</param>
+        /// <returns>List&lt;Uri&gt;.</returns>
+        public List<Uri> ListBlobDirectories(string containerName)
+        {
+            var backupContainer = blobClient.GetContainerReference(containerName);
+
+            var blobs = backupContainer.ListBlobs();
+
+            List<Uri> directory = new List<Uri>();
+
+            foreach (var dir in blobs.OfType<CloudBlobDirectory>())
+            {
+                directory.Add(dir.Uri);
+            }
+
+            return directory;
         }
 
         /// <summary>

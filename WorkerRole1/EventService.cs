@@ -47,9 +47,9 @@ namespace WebSocketSharp.Server
         /// a <see cref="E:WebSocketSharp.WebSocket.OnMessage" /> event.</param>
         protected override void OnMessage(MessageEventArgs e)
         {
-            var msg = e.Data == "BALUS"
-                      ? "I've been balused already..."
-                      : "I'm not available now.";
+            var msg = e.Data == "TESTWORD"
+                      ? "Found ..."
+                      : "Not found ...";
 
             Send(msg);
         }

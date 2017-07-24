@@ -90,8 +90,6 @@ namespace WebSocketSharp.Server
         protected override void OnMessage(MessageEventArgs e)
         {
             Process(e.Data);
-
-            //Send(msg);
         }
 
         /// <summary>
