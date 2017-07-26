@@ -118,7 +118,6 @@ namespace WorkerRole1
             }
         }
 
-
         /// <summary>
         /// Roles the environment changed.
         /// </summary>

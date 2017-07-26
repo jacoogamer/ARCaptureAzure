@@ -229,7 +229,7 @@ namespace WorkerRole1
         /// </summary>
         /// <param name="containerName">Name of the container.</param>
         /// <param name="key">The key.</param>
-        private void DeleteBlob(string containerName, string key)
+        public void DeleteBlob(string containerName, string key)
         {
             var container = blobClient.GetContainerReference(containerName);
             container.CreateIfNotExists();

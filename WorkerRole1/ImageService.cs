@@ -102,6 +102,23 @@ namespace WebSocketSharp.Server
                     }
                     break;
                 }
+                case RequestType.DeleteImage:
+                    {
+                        BlobConnector blob = new BlobConnector();
+                        blob.DeleteBlob("arimages", clientRequest.name);
+
+                        ServerResponse serverResponse = new ServerResponse()
+                        {
+                            id = 2,
+                            name = "testName",
+                            ResponseType = "DeleteImage"
+                        };
+
+                        string ret = JsonConvert.SerializeObject(serverResponse);
+                        SendThis(ret);
+
+                        break;
+                    }
                 case RequestType.ListBlobDirectories:
                 {
                         BlobConnector blobConnector = new BlobConnector();
