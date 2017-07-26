@@ -34,10 +34,12 @@ namespace WorkerRole1
         /// The storage account
         /// </summary>
         CloudStorageAccount storageAccount;
+
         /// <summary>
         /// The BLOB client
         /// </summary>
         CloudBlobClient blobClient;
+
         /// <summary>
         /// The container
         /// </summary>

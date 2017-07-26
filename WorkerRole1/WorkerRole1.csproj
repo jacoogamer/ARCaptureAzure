@@ -80,10 +80,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlobConnector.cs" />
+    <Compile Include="ClientRequest.cs" />
     <Compile Include="ImageService.cs" />
     <Compile Include="EventService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestType.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="ServerResponse.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>

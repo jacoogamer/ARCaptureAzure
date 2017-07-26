@@ -33,6 +33,7 @@ namespace WorkerRole1
         /// The cancellation token source
         /// </summary>
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
         /// <summary>
         /// The run complete event
         /// </summary>

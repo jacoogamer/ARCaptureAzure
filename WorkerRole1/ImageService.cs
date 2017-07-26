@@ -4,7 +4,7 @@
 // Created          : 07-20-2017
 //
 // Last Modified By : Jason Coombes
-// Last Modified On : 07-20-2017
+// Last Modified On : 07-24-2017
 // ***********************************************************************
 // <copyright file="ImageService.cs" company="">
 //     Copyright ©  2017
@@ -22,62 +22,6 @@ using WorkerRole1;
 /// </summary>
 namespace WebSocketSharp.Server
 {
-
-    /// <summary>
-    /// Class ClientRequest.
-    /// </summary>
-    public class ClientRequest
-    {
-        /// <summary>
-        /// The identifier
-        /// </summary>
-        public int id;
-
-        /// <summary>
-        /// The name
-        /// </summary>
-        public string name;
-
-        /// <summary>
-        /// The image
-        /// </summary>
-        public byte[] image;
-
-        public RequestType RequestType;
-    }
-
-    public enum RequestType
-    {
-        DownloadImage = 1,
-        ListBlobDirectories = 2,
-        ListBlobsInDirectory = 3
-    }
-
-    /// <summary>
-    /// Class ServerResponse.
-    /// </summary>
-    public class ServerResponse
-    {
-        /// <summary>
-        /// The identifier
-        /// </summary>
-        public int id;
-
-        /// <summary>
-        /// The name
-        /// </summary>
-        public string name;
-
-        /// <summary>
-        /// The image
-        /// </summary>
-        public byte[] image;
-
-        public string ResponseType;
-
-        public List<string> BlobDirectories;
-    }
-
     /// <summary>
     /// Class ImageService.
     /// </summary>
@@ -120,6 +64,23 @@ namespace WebSocketSharp.Server
 
             switch (clientRequest.RequestType)
             {
+                case RequestType.UploadImage:
+                    {
+                        BlobConnector blob = new BlobConnector();
+                        blob.UploadImage(clientRequest.name, new MemoryStream(clientRequest.image));
+
+                        ServerResponse serverResponse = new ServerResponse()
+                        {
+                            id = 2,
+                            name = "testName",
+                            ResponseType = "UploadImage"
+                        };
+
+                        string ret = JsonConvert.SerializeObject(serverResponse);
+                        SendThis(ret);
+
+                        break;
+                    }
                 case RequestType.DownloadImage:
                 {
                     if (clientRequest.name == "vr_orig.png")

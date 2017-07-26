@@ -25,6 +25,7 @@ namespace WorkerRole1
         /// The socket credentials username
         /// </summary>
         public static string SocketCredentialsUsername = "jason";
+
         /// <summary>
         /// The socket credentials password
         /// </summary>
