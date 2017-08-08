@@ -52,6 +52,6 @@ namespace WorkerRole1
         /// </summary>
         ListBlobsInDirectory = 5,
 
-        DownloadAllImages
+        DownloadAllImages = 6
     }
 }
