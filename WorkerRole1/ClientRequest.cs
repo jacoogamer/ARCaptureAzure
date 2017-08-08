@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace WorkerRole1
         /// The image
         /// </summary>
         public byte[] image;
+
+        /// <summary>
+        /// JSON Feature Description
+        /// </summary>
+        public string featureDescription;
 
         /// <summary>
         /// The request type

@@ -54,6 +54,7 @@
     <DiagnosticsConfiguration Include="WorkerRole1Content\diagnostics.wadcfgx" />
   </ItemGroup>
   <ItemGroup>
+    <PublishProfile Include="Profiles\ARCaptureProduction1.azurePubxml" />
     <PublishProfile Include="Profiles\ARCaptureStaging.azurePubxml" />
     <PublishProfile Include="Profiles\ARCaptureProduction.azurePubxml" />
   </ItemGroup>
