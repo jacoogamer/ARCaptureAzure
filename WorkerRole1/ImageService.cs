@@ -81,6 +81,10 @@ namespace WebSocketSharp.Server
 
                         break;
                     }
+                case RequestType.DownloadAllImages:
+                    {
+                    }
+                    break;
                 case RequestType.DownloadImage:
                 {
                     if (clientRequest.name == "vr_orig.png")

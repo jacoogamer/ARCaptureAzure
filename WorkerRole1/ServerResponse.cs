@@ -29,6 +29,11 @@ namespace WorkerRole1
         public string ResponseType;
 
         /// <summary>
+        /// JSON Feature Description
+        /// </summary>
+        public string featureDescription;
+
+        /// <summary>
         /// The BLOB directories
         /// </summary>
         public List<string> BlobDirectories;

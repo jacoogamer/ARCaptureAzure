@@ -50,6 +50,8 @@ namespace WorkerRole1
         /// <summary>
         /// The list blobs in directory
         /// </summary>
-        ListBlobsInDirectory = 5
+        ListBlobsInDirectory = 5,
+
+        DownloadAllImages
     }
 }
