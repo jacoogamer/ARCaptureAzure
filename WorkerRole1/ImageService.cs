@@ -71,8 +71,8 @@ namespace WebSocketSharp.Server
 
                         ServerResponse serverResponse = new ServerResponse()
                         {
-                            id = 2,
-                            name = "testName",
+                            id = clientRequest.id,
+                            name = clientRequest.name,
                             ResponseType = "UploadImage"
                         };
 
@@ -87,23 +87,17 @@ namespace WebSocketSharp.Server
                     break;
                 case RequestType.DownloadImage:
                 {
-                    if (clientRequest.name == "vr_orig.png")
+                    BlobConnector blob = new BlobConnector();
+
+                    ServerResponse serverResponse = new ServerResponse()
                     {
-                        BlobConnector blob = new BlobConnector();
-                        blob.UploadImage(clientRequest.name, new MemoryStream(clientRequest.image));
+                        ResponseType = "DownloadImage"
+                    };
 
-                        ServerResponse serverResponse = new ServerResponse()
-                        {
-                            id = 2,
-                            name = "testName",
-                            ResponseType = "DownloadImage"
-                        };
+                    serverResponse.image = blob.DownloadImage(clientRequest.name);
 
-                        serverResponse.image = blob.DownloadImage(clientRequest.name);
-
-                        string ret = JsonConvert.SerializeObject(serverResponse);
-                        SendThis(ret);
-                    }
+                    string ret = JsonConvert.SerializeObject(serverResponse);
+                    SendThis(ret);
                     break;
                 }
                 case RequestType.DeleteImage:
@@ -113,8 +107,6 @@ namespace WebSocketSharp.Server
 
                         ServerResponse serverResponse = new ServerResponse()
                         {
-                            id = 2,
-                            name = "testName",
                             ResponseType = "DeleteImage"
                         };
 
@@ -123,6 +115,17 @@ namespace WebSocketSharp.Server
 
                         break;
                     }
+                case RequestType.DeleteAllImages:
+                    {
+                        BlobConnector blobConnector = new BlobConnector();
+                        List<string> blobDirectories = new List<string>();
+                        blobDirectories = blobConnector.ListBlobs("arimages");
+                        foreach(string blob in blobDirectories)
+                        {
+                            blobConnector.DeleteBlob("arimages", blob);
+                        }
+                    }
+                    break;
                 case RequestType.ListBlobDirectories:
                 {
                         BlobConnector blobConnector = new BlobConnector();
@@ -131,8 +134,6 @@ namespace WebSocketSharp.Server
 
                         ServerResponse serverResponse = new ServerResponse()
                         {
-                            id = 2,
-                            name = "testListBlobDirectories",
                             ResponseType = "ListBlobDirectories",
                             BlobDirectories = blobDirectories
                         };
@@ -150,8 +151,6 @@ namespace WebSocketSharp.Server
 
                         ServerResponse serverResponse = new ServerResponse()
                         {
-                            id = 2,
-                            name = "testListBlobs",
                             ResponseType = "ListBlobs",
                             BlobDirectories = blobDirectories
                         };
