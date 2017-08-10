@@ -11,10 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Microsoft.WindowsAzure.Storage.Blob;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WorkerRole1;
 
 /// <summary>
@@ -54,6 +56,29 @@ namespace WebSocketSharp.Server
             Process(e.Data);
         }
 
+        private void SendImages()
+        {
+            BlobConnector blobConnector = new BlobConnector();
+            List<string> blobDirectories = new List<string>();
+            blobDirectories = blobConnector.ListBlobs("arimages");
+            foreach (string blob in blobDirectories)
+            {
+                byte[] buffer = blobConnector.DownloadImage(blob);
+                string ret = System.Text.Encoding.Default.GetString(buffer);
+                ClientRequest retClientRequest = (ClientRequest)JsonConvert.DeserializeObject(ret);
+
+                ServerResponse serverResponse = new ServerResponse()
+                {
+                    ResponseType = "DownloadImage",
+                    featureDescription = retClientRequest.featureDescription,
+                    image = retClientRequest.image
+                };
+
+                string ret2 = JsonConvert.SerializeObject(serverResponse);
+                SendThis(ret2);
+            }
+        }
+
         /// <summary>
         /// Processes the specified json.
         /// </summary>
@@ -67,7 +92,9 @@ namespace WebSocketSharp.Server
                 case RequestType.UploadImage:
                     {
                         BlobConnector blob = new BlobConnector();
-                        blob.UploadImage(clientRequest.name, new MemoryStream(clientRequest.image));
+                        string clientRequestJSON = JsonConvert.SerializeObject(clientRequest);
+                        byte[] buffer = System.Text.Encoding.UTF8.GetBytes(clientRequestJSON);
+                        blob.UploadImage(clientRequest.name, new MemoryStream(buffer));
 
                         ServerResponse serverResponse = new ServerResponse()
                         {
@@ -83,21 +110,49 @@ namespace WebSocketSharp.Server
                     }
                 case RequestType.DownloadAllImages:
                     {
+                        BlobConnector blobConnector = new BlobConnector();
+                        ServerResponse serverResponse = new ServerResponse()
+                        {
+                            ResponseType = "DownloadAllImages"
+                        };
+
+                        string ret = JsonConvert.SerializeObject(serverResponse);
+                        SendThis(ret);
+
+                        SendImages();
                     }
                     break;
                 case RequestType.DownloadImage:
                 {
-                    BlobConnector blob = new BlobConnector();
-
+                    BlobConnector blobConnector = new BlobConnector();
                     ServerResponse serverResponse = new ServerResponse()
                     {
                         ResponseType = "DownloadImage"
                     };
 
-                    serverResponse.image = blob.DownloadImage(clientRequest.name);
+                    List<string> blobDirectories = new List<string>();
+                    var blobs = blobConnector.ListBlobs("arimages");
 
-                    string ret = JsonConvert.SerializeObject(serverResponse);
-                    SendThis(ret);
+                    bool exists = blobDirectories.Any(s => s.Contains(clientRequest.name));
+                    // alternative
+                    // int index = blobDirectories.FindIndex(x => x.StartsWith(clientRequest.name));
+
+                    if (exists)
+                    {
+                        byte[] buffer = blobConnector.DownloadImage(clientRequest.name);
+                        string ret = System.Text.Encoding.Default.GetString(buffer);
+                        ClientRequest retClientRequest = (ClientRequest)JsonConvert.DeserializeObject(ret);
+
+                        serverResponse = new ServerResponse()
+                        {
+                            ResponseType = "DownloadImage",
+                            featureDescription = retClientRequest.featureDescription,
+                            image = retClientRequest.image
+                        };
+
+                        SendThis(ret);
+                        break;
+                    }
                     break;
                 }
                 case RequestType.DeleteImage:
