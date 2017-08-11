@@ -143,7 +143,8 @@ namespace WorkerRole1
             List<string> blobList = new List<string>();
             foreach (var blob in blobs.OfType<CloudBlob>())
             {
-                blobList.Add(blob.Uri.ToString());
+                string str = blob.Uri.ToString().Substring(blob.Uri.ToString().LastIndexOf('/')+1, blob.Uri.ToString().Length - blob.Uri.ToString().LastIndexOf('/')-1);
+                blobList.Add(str);
             }
 
             return blobList;

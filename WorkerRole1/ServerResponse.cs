@@ -37,5 +37,7 @@ namespace WorkerRole1
         /// The BLOB directories
         /// </summary>
         public List<string> BlobDirectories;
+
+        public List<string> Blobs;
     }
 }

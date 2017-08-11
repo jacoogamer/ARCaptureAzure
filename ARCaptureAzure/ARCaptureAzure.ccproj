@@ -55,8 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <PublishProfile Include="Profiles\ARCaptureProduction1.azurePubxml" />
-    <PublishProfile Include="Profiles\ARCaptureStaging.azurePubxml" />
-    <PublishProfile Include="Profiles\ARCaptureProduction.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

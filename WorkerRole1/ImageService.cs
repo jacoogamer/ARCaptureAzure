@@ -61,15 +61,18 @@ namespace WebSocketSharp.Server
             BlobConnector blobConnector = new BlobConnector();
             List<string> blobDirectories = new List<string>();
             blobDirectories = blobConnector.ListBlobs("arimages");
+
+
             foreach (string blob in blobDirectories)
             {
                 byte[] buffer = blobConnector.DownloadImage(blob);
                 string ret = System.Text.Encoding.Default.GetString(buffer);
-                ClientRequest retClientRequest = (ClientRequest)JsonConvert.DeserializeObject(ret);
+                ClientRequest retClientRequest = JsonConvert.DeserializeObject(ret) as ClientRequest;
 
                 ServerResponse serverResponse = new ServerResponse()
                 {
                     ResponseType = "DownloadImage",
+                    name = blob,
                     featureDescription = retClientRequest.featureDescription,
                     image = retClientRequest.image
                 };
@@ -111,9 +114,13 @@ namespace WebSocketSharp.Server
                 case RequestType.DownloadAllImages:
                     {
                         BlobConnector blobConnector = new BlobConnector();
+
+                        var blobs = blobConnector.ListBlobs("arimages");
+
                         ServerResponse serverResponse = new ServerResponse()
                         {
-                            ResponseType = "DownloadAllImages"
+                            ResponseType = "DownloadAllImages",
+                            Blobs = blobs
                         };
 
                         string ret = JsonConvert.SerializeObject(serverResponse);
@@ -133,15 +140,15 @@ namespace WebSocketSharp.Server
                     List<string> blobDirectories = new List<string>();
                     var blobs = blobConnector.ListBlobs("arimages");
 
-                    bool exists = blobDirectories.Any(s => s.Contains(clientRequest.name));
+                    // bool exists = blobDirectories.Any(s => s.Contains(clientRequest.name));
                     // alternative
-                    // int index = blobDirectories.FindIndex(x => x.StartsWith(clientRequest.name));
+                    int index = blobs.FindIndex(x => x.StartsWith(clientRequest.name));
 
-                    if (exists)
+                    if (index > -1)
                     {
                         byte[] buffer = blobConnector.DownloadImage(clientRequest.name);
                         string ret = System.Text.Encoding.Default.GetString(buffer);
-                        ClientRequest retClientRequest = (ClientRequest)JsonConvert.DeserializeObject(ret);
+                        ClientRequest retClientRequest = JsonConvert.DeserializeObject<ClientRequest>(ret);
 
                         serverResponse = new ServerResponse()
                         {
@@ -150,7 +157,8 @@ namespace WebSocketSharp.Server
                             image = retClientRequest.image
                         };
 
-                        SendThis(ret);
+                        string ret2 = JsonConvert.SerializeObject(serverResponse);
+                        SendThis(ret2);
                         break;
                     }
                     break;

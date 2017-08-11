@@ -1,0 +1,1 @@
+csrun csx\Debug ServiceConfiguration.Local.cscfg 
