@@ -80,6 +80,16 @@ namespace WorkerRole1
                 ret = true;
             }
 
+            if (m_webSocketServer.WebSocketServices.Hosts.FirstOrDefault(x => x.BehaviorType == typeof(SignalService)) == null)
+            {
+                Debug.WriteLine("Adding service");
+                m_webSocketServer.AddWebSocketService<ImageService>("/SignalService");
+            }
+            else
+            {
+                ret = true;
+            }
+
             return ret;
         }
 

@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="BlobConnector.cs" />
     <Compile Include="ClientRequest.cs" />
+    <Compile Include="SignalService.cs" />
     <Compile Include="ImageService.cs" />
     <Compile Include="EventService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
