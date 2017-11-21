@@ -11,12 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using Microsoft.WindowsAzure.Storage.Blob;
+
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using WorkerRole1;
 
 /// <summary>
@@ -72,9 +71,9 @@ namespace WebSocketSharp.Server
                 ServerResponse serverResponse = new ServerResponse()
                 {
                     ResponseType = "DownloadImage",
-                    name = blob,
-                    featureDescription = retClientRequest.featureDescription,
-                    image = retClientRequest.image
+                    Name = blob,
+                    FeatureDescription = retClientRequest.FeatureDescription,
+                    Image = retClientRequest.Image
                 };
 
                 string ret2 = JsonConvert.SerializeObject(serverResponse);
@@ -97,12 +96,12 @@ namespace WebSocketSharp.Server
                         BlobConnector blob = new BlobConnector();
                         string clientRequestJSON = JsonConvert.SerializeObject(clientRequest);
                         byte[] buffer = System.Text.Encoding.UTF8.GetBytes(clientRequestJSON);
-                        blob.UploadImage(clientRequest.name, new MemoryStream(buffer));
+                        blob.UploadImage(clientRequest.Name, new MemoryStream(buffer));
 
                         ServerResponse serverResponse = new ServerResponse()
                         {
-                            id = clientRequest.id,
-                            name = clientRequest.name,
+                            ID = clientRequest.ID,
+                            Name = clientRequest.Name,
                             ResponseType = "UploadImage"
                         };
 
@@ -142,19 +141,19 @@ namespace WebSocketSharp.Server
 
                     // bool exists = blobDirectories.Any(s => s.Contains(clientRequest.name));
                     // alternative
-                    int index = blobs.FindIndex(x => x.StartsWith(clientRequest.name));
+                    int index = blobs.FindIndex(x => x.StartsWith(clientRequest.Name));
 
                     if (index > -1)
                     {
-                        byte[] buffer = blobConnector.DownloadImage(clientRequest.name);
+                        byte[] buffer = blobConnector.DownloadImage(clientRequest.Name);
                         string ret = System.Text.Encoding.Default.GetString(buffer);
                         ClientRequest retClientRequest = JsonConvert.DeserializeObject<ClientRequest>(ret);
 
                         serverResponse = new ServerResponse()
                         {
                             ResponseType = "DownloadImage",
-                            featureDescription = retClientRequest.featureDescription,
-                            image = retClientRequest.image
+                            FeatureDescription = retClientRequest.FeatureDescription,
+                            Image = retClientRequest.Image
                         };
 
                         string ret2 = JsonConvert.SerializeObject(serverResponse);
@@ -166,7 +165,7 @@ namespace WebSocketSharp.Server
                 case RequestType.DeleteImage:
                     {
                         BlobConnector blob = new BlobConnector();
-                        blob.DeleteBlob("arimages", clientRequest.name);
+                        blob.DeleteBlob("arimages", clientRequest.Name);
 
                         ServerResponse serverResponse = new ServerResponse()
                         {
@@ -214,7 +213,7 @@ namespace WebSocketSharp.Server
 
                         ServerResponse serverResponse = new ServerResponse()
                         {
-                            ResponseType = "ListBlobs",
+                            ResponseType = "ListBlobsInDirectory",
                             BlobDirectories = blobDirectories
                         };
 

@@ -1,37 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace WorkerRole1
 {
     public class ClientRequest
     {
-        /// <summary>
-        /// The identifier
-        /// </summary>
-        public int id;
+        public int ID { get; set; }
 
-        /// <summary>
-        /// The name
-        /// </summary>
-        public string name;
+        public string Name { get; set; }
 
-        /// <summary>
-        /// The image
-        /// </summary>
-        public byte[] image;
+        public byte[] Image { get; set; }
 
-        /// <summary>
-        /// JSON Feature Description
-        /// </summary>
-        public string featureDescription;
+        public string FeatureDescription { get; set; }
 
-        /// <summary>
-        /// The request type
-        /// </summary>
-        public RequestType RequestType;
+        public RequestType RequestType { get; set; }
     }
 }

@@ -1,43 +1,22 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WorkerRole1
 {
     public class ServerResponse
     {
-        /// <summary>
-        /// The identifier
-        /// </summary>
-        public int id;
+        public int ID { get; set; }
 
-        /// <summary>
-        /// The name
-        /// </summary>
-        public string name;
+        public string Name { get; set; }
 
-        /// <summary>
-        /// The image
-        /// </summary>
-        public byte[] image;
+        public byte[] Image { get; set; }
 
-        /// <summary>
-        /// The response type
-        /// </summary>
-        public string ResponseType;
+        public string ResponseType { get; set; }
 
-        /// <summary>
-        /// JSON Feature Description
-        /// </summary>
-        public string featureDescription;
+        public string FeatureDescription { get; set; }
 
-        /// <summary>
-        /// The BLOB directories
-        /// </summary>
-        public List<string> BlobDirectories;
+        public List<string> BlobDirectories { get; set; }
 
-        public List<string> Blobs;
+        public List<string> Blobs { get; set; }
     }
 }

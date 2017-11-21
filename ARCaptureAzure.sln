@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerRole1", "WorkerRole1\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketServer", "WebSocketServer\WebSocketServer.csproj", "{84161FE7-5C4C-4768-8D6B-890AB4EEE0C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARRetailManager", "ARRetailManager\ARRetailManager.csproj", "{22D0F607-4FAE-45F0-AE29-6096C115D8B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{84161FE7-5C4C-4768-8D6B-890AB4EEE0C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84161FE7-5C4C-4768-8D6B-890AB4EEE0C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84161FE7-5C4C-4768-8D6B-890AB4EEE0C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22D0F607-4FAE-45F0-AE29-6096C115D8B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22D0F607-4FAE-45F0-AE29-6096C115D8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22D0F607-4FAE-45F0-AE29-6096C115D8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22D0F607-4FAE-45F0-AE29-6096C115D8B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
